@@ -40,8 +40,8 @@ To process hundreds of thousands of high-resolution `.tif` files across entire c
 
 ### 6. Advanced Duplicate Handling
 To address the issue of multiple overlapping polygons generated for a single building due to tiled inference, a multi-stage duplicate handling approach was implemented:
-*   **Prince County (Spatial Non-Maximum Suppression):** Initially, a spatial NMS-like technique was employed to remove duplicate detections based on Intersection-over-Union (IoU) metrics.
-*   **Kings County (Refined GeoPandas Dissolve/Explode):** A more robust method using `GeoPandas` was developed, involving:
+*   **First approach (Spatial Non-Maximum Suppression):** Initially, a spatial NMS-like technique was employed to remove duplicate detections based on Intersection-over-Union (IoU) metrics.
+*   **Final method (Refined GeoPandas Dissolve/Explode):** A more robust method using `GeoPandas` was developed, involving:
     *   **Micro-Buffering:** Expanding polygons by 0.5 meters to bridge microscopic gaps between tiles.
     *   **Same-Class Dissolve:** Merging touching polygons of the same building class into single, cohesive geometries.
     *   **Explode:** Breaking down merged multipolygons back into individual, distinct building shapes.
