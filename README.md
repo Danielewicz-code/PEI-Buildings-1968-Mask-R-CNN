@@ -1,12 +1,12 @@
 # Deep Learning for Geospatial Analysis: Automating Building Recognition Across Prince Edward Island (1968)
 
 ## Project Objective
-This project aimed to achieve clear segmentation and mapping of historic buildings (barns, houses, and other structures such as stores, sheds, and gas stations) using historical aerial imagery of Prince Edward Island from 1968. This process would bring a wide opportunity for analysis, exploring different metrics and statistics that would match up with different phenomena such as the `potato belt`.
+This project aimed to achieve clear segmentation and mapping of historic buildings (barns, houses, and other structures such as stores, sheds, and gas stations) using historical aerial imagery of Prince Edward Island from 1968. This process opens up wide opportunities for analysis, exploring various metrics and statistics that align with regional phenomena, such as the `potato belt`.
 
 ## Initial Challenges
 1.  **Data Complexity:** Dealing with a massive, black-and-white historical map required specialized handling and custom dataset creation.
-2.  **An initial stage of the project was developed by using the internal Deep Learning toolset in arcGIS, using Mask-R-CNN (resnet50) trained with ~1,200 training samples, the iteration of this method was successful on producing polygon shapes for each class over the whole island and morphed the process from manual creation to manual correction, saving months of work. Nevertheless the team thought a posterior iteration of the same model but with more training data would give a better result in the generation & cathegorization of these polygons.
-4.  **Computational Limitations:** The deep learning capabilities built into ArcGIS could not apply like previously as our hardware wasn't powerful enough to process the increase of ~1,200 training samples to ~14,000, necessitating an external deep learning solution.
+2.  **Iterative Model Scaling:** An initial stage of the project utilized the internal Deep Learning toolset in ArcGIS, deploying Mask R-CNN (ResNet-50) trained with ~1,200 samples. This iteration successfully produced polygon shapes for each class across the whole island, morphing the workflow from manual creation to manual correction and saving months of work. However, the team concluded that a subsequent iteration of the same model with more training data would yield better results in generating and categorizing these polygons.
+3.  **Computational Limitations:** The deep learning capabilities built into ArcGIS could no longer be applied as before. Our hardware wasn't powerful enough to process the scale-up from ~1,200 to ~14,000 training samples, necessitating an external deep learning solution.
 
 ## Technical Journey and Methodology
 
@@ -30,7 +30,7 @@ To process hundreds of thousands of high-resolution `.tif` files across entire c
 *   **Filtering for Relevance:** To optimize processing time, irrelevant tiles were filtered out. This included:
     *   Discarding empty ocean areas (NoData flags).
     *   Removing black clusters.
-    *   Filtering tiles with low variance, indicating lack of meaningful visual information.
+    *   Filtering tiles with low variance, indicating a lack of meaningful visual information.
 *   **Batch Processing & Checkpointing:** Model inference on these tiles was optimized through batch processing. A checkpointing mechanism was implemented to save processed progress incrementally, allowing for recovery and resumption in case of system interruptions.
 
 ### 5. GeoJSON Conversion and Spatial Intelligence
@@ -53,25 +53,25 @@ To address the issue of multiple overlapping polygons generated for a single bui
 *   **Workflow Value:** This project demonstrates a powerful workflow for automating the creation of valuable geospatial datasets from historical aerial imagery.
 *   **Historical Insights:** The generated dataset will be instrumental in uncovering historical insights into Prince Edward Island from 1968, including identifying housing clusters, land distribution patterns, and understanding the broader geographical state of the island.
 
-## Final result example implemented into arcGIS
+## Final result example implemented into ArcGIS
 
 ![Detection 1](images/result1.png)
 
 ![Detection 2](images/result2.png)
 
 
-## Data analysis
-As we entered the analysing phase one of the ways to represent our data was creating a visual and numeric representation of the following:
+## Data Analysis
+As we entered the analyzing phase, one of our approaches was to create visual and numeric representations of the following metrics:
 
-* House_N: Represents total number of houses per lot
-* House_AveM2: Represents average `m2` of houses footprint per lot
-* Barn_N: Represents total number of barns per lot
-* Barn_AveM2: Represents average `m2` of barns footprint per lot
-* Out_N: Represents total number of out buildings per lot
-* Out_AveM2: Represents average `m2` of out buildings footprint per lot
+* **House_N:** Total number of houses per lot
+* **House_AveM2:** Average `m2` of house footprints per lot
+* **Barn_N:** Total number of barns per lot
+* **Barn_AveM2:** Average `m2` of barn footprints per lot
+* **Out_N:** Total number of outbuildings per lot
+* **Out_AveM2:** Average `m2` of outbuilding footprints per lot
 
-With these metrics we can see the hotspots represented on each lot. as previously thought this uncovers phenomena like the potato belt where theres a higher concentration of farms on the middle-west part of the island.
-Results from here are in: [[1968_Comprehensive_Building_Report]](1968_Comprehensive_Building_Report.pdf)
+With these metrics, we can map the hotspots across each lot. As anticipated, this uncovers phenomena like the potato belt, highlighting a higher concentration of farms in the central-western part of the island.
+Results from this analysis are available in: [[1968_Comprehensive_Building_Report]](1968_Comprehensive_Building_Report.pdf)
 
 ## Technologies Utilized
 Key open-source libraries critical to this project include PyTorch, torchvision, rasterio, shapely, geojson, geopandas, and numpy.
