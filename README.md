@@ -54,9 +54,9 @@ To address the issue of multiple overlapping polygons generated for a single bui
 
 ## Final result example implemented into arcGIS
 
-![Detection 1](images/results1.png)
+![Detection 1](images/result1.png)
 
-![Detection 2](images/results2.png)
+![Detection 2](images/result2.png)
 
 ## Technologies Utilized
 Key open-source libraries critical to this project include PyTorch, torchvision, rasterio, shapely, geojson, geopandas, and numpy.
