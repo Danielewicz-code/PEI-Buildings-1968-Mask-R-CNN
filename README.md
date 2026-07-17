@@ -1,11 +1,12 @@
 # Deep Learning for Geospatial Analysis: Automating Building Recognition Across Prince Edward Island (1968)
 
 ## Project Objective
-This project aimed to achieve clear segmentation and mapping of historic buildings (barns, houses, and other structures such as stores, sheds, and gas stations) using historical aerial imagery of Prince Edward Island from 1968.
+This project aimed to achieve clear segmentation and mapping of historic buildings (barns, houses, and other structures such as stores, sheds, and gas stations) using historical aerial imagery of Prince Edward Island from 1968. This process would bring a wide opportunity for analysis, exploring different metrics and statistics that would match up with different phenomena such as the `potato belt`.
 
 ## Initial Challenges
 1.  **Data Complexity:** Dealing with a massive, black-and-white historical map required specialized handling and custom dataset creation.
-2.  **Computational Limitations:** The deep learning capabilities built into ArcGIS were not performant enough on available work computers, necessitating an external deep learning solution.
+2.  **An initial stage of the project was developed by using the internal Deep Learning toolset in arcGIS, using Mask-R-CNN (resnet50) trained with ~1,200 training samples, the iteration of this method was successful on producing polygon shapes for each class over the whole island and morphed the process from manual creation to manual correction, saving months of work. Nevertheless the team thought a posterior iteration of the same model but with more training data would give a better result in the generation & cathegorization of these polygons.
+4.  **Computational Limitations:** The deep learning capabilities built into ArcGIS could not apply like previously as our hardware wasn't powerful enough to process the increase of ~1,200 training samples to ~14,000, necessitating an external deep learning solution.
 
 ## Technical Journey and Methodology
 
@@ -57,6 +58,20 @@ To address the issue of multiple overlapping polygons generated for a single bui
 ![Detection 1](images/result1.png)
 
 ![Detection 2](images/result2.png)
+
+
+## Data analysis
+As we entered the analysing phase one of the ways to represent our data was creating a visual and numeric representation of the following:
+
+* House_N: Represents total number of houses per lot
+* House_AveM2: Represents average `m2` of houses footprint per lot
+* Barn_N: Represents total number of barns per lot
+* Barn_AveM2: Represents average `m2` of barns footprint per lot
+* Out_N: Represents total number of out buildings per lot
+* Out_AveM2: Represents average `m2` of out buildings footprint per lot
+
+With these metrics we can see the hotspots represented on each lot. as previously thought this uncovers phenomena like the potato belt where theres a higher concentration of farms on the middle-west part of the island.
+Results from here are in ! [[Detection 3]](v1.pdf)
 
 ## Technologies Utilized
 Key open-source libraries critical to this project include PyTorch, torchvision, rasterio, shapely, geojson, geopandas, and numpy.
