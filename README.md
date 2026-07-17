@@ -71,7 +71,7 @@ As we entered the analysing phase one of the ways to represent our data was crea
 * Out_AveM2: Represents average `m2` of out buildings footprint per lot
 
 With these metrics we can see the hotspots represented on each lot. as previously thought this uncovers phenomena like the potato belt where theres a higher concentration of farms on the middle-west part of the island.
-Results from here are in ! [[Detection 3]](v1.pdf)
+Results from here are in ! [[Detection 3]](1968_Comprehensive_Building_Report.pdf)
 
 ## Technologies Utilized
 Key open-source libraries critical to this project include PyTorch, torchvision, rasterio, shapely, geojson, geopandas, and numpy.
