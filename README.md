@@ -22,7 +22,7 @@ This project aimed to achieve clear segmentation and mapping of historic buildin
 
 ### 3. Model Training
 *   **GPU-Accelerated Training:** The model underwent 10 epochs of training on Google Colab, leveraging its GPU resources for faster computation.
-*   **Performance:** Training was conducted on 6,044 images, resulting in a validation loss of approximately 0.31, indicating strong model performance.
+*   **Performance:** Training was conducted on 6,044 images which had the 14,000 building sets, resulting in a validation loss of approximately 0.31, indicating strong model performance.
 
 ### 4. Memory-Efficient Geospatial Inference Pipeline
 To process hundreds of thousands of high-resolution `.tif` files across entire counties (Prince and Kings Counties), a specialized memory-efficient pipeline was developed:
