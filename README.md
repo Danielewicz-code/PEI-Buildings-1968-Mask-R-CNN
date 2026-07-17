@@ -1,7 +1,7 @@
 # Deep Learning for Geospatial Analysis: Automating Building Recognition Across Prince Edward Island (1968)
 
 ## Project Objective
-This project aimed to achieve clear segmentation and mapping of historic buildings (barns, houses, and other structures such as stores, sheds, and gas stations) using historical aerial imagery of Prince Edward Island from 1968. This process opens up wide opportunities for analysis, exploring various metrics and statistics that align with regional phenomena.
+This project aimed to achieve clear segmentation and mapping of historic buildings (barns, houses, and other structures such as garages, sheds, and work stations) using historical aerial imagery of Prince Edward Island from 1968. This process opens up wide opportunities for analysis, exploring various metrics and statistics that align with regional phenomena.
 
 ## Initial Challenges
 1.  **Data Complexity:** Dealing with a massive, black-and-white historical map required specialized handling and custom dataset creation.
