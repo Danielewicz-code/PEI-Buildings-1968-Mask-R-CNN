@@ -39,14 +39,19 @@ To process hundreds of thousands of high-resolution `.tif` files across entire c
 *   **Area Calculation:** The real-world area of detected buildings was precisely calculated in square meters using the original Coordinate Reference System (CRS) and embedded into the GeoJSON properties.
 
 ### 6. Advanced Duplicate Handling
-To address the issue of multiple overlapping polygons generated for a single building due to tiled inference, a multi-stage duplicate handling approach was implemented:
-*   **First approach (Spatial Non-Maximum Suppression):** Initially, a spatial NMS-like technique was employed to remove duplicate detections based on Intersection-over-Union (IoU) metrics.
-*   **Final method (Refined GeoPandas Dissolve/Explode):** A more robust method using `GeoPandas` was developed, involving:
-    *   **Micro-Buffering:** Expanding polygons by 0.5 meters to bridge microscopic gaps between tiles.
-    *   **Same-Class Dissolve:** Merging touching polygons of the same building class into single, cohesive geometries.
-    *   **Explode:** Breaking down merged multipolygons back into individual, distinct building shapes.
-    *   **Restore Original Dimensions:** Shrinking polygons by 0.5 meters to revert to their true ground size.
-    *   **Cross-Class Overlap Filtering:** A final filter was applied to remove cross-class overlaps. If two or more polygons (even of different classes) overlapped by a 30% threshold, the detection with the highest confidence score was retained, drastically reducing redundant shapes. This refined process resulted in over 9,300 unique, perfectly merged properties.
+To address the issue of multiple overlapping polygons generated for a single building due to tiled inference, a multi-stage duplicate handling approach was implemented.
+
+**Refined GeoPandas Dissolve/Explode: A more robust method using GeoPandas was developed, involving:**
+
+* Micro-Buffering: Expanding polygons by 0.5 meters to bridge microscopic gaps between tiles.
+
+* Same-Class Dissolve: Merging touching polygons of the same building class into single, cohesive geometries.
+
+* Explode: Breaking down merged multipolygons back into individual, distinct building shapes.
+
+* Restore Original Dimensions: Shrinking polygons by 0.5 meters to revert to their true ground size.
+
+* Cross-Class Overlap Filtering: A final filter removes cross-class overlaps. If two or more polygons (even of different classes) overlap by a 30% threshold, the detection with the highest confidence score is retained, drastically reducing redundant shapes.
 
 ## Final Review and Project Outcome
 *   **ArcGIS Integration:** The generated GeoJSON files were imported back into ArcGIS for manual correction, inspection, and further analysis.
