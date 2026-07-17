@@ -52,5 +52,11 @@ To address the issue of multiple overlapping polygons generated for a single bui
 *   **Workflow Value:** This project demonstrates a powerful workflow for automating the creation of valuable geospatial datasets from historical aerial imagery.
 *   **Historical Insights:** The generated dataset will be instrumental in uncovering historical insights into Prince Edward Island from 1968, including identifying housing clusters, land distribution patterns, and understanding the broader geographical state of the island.
 
+## Final result example implemented into arcGIS
+
+![Detection 1](images/results1.png)
+
+![Detection 2](images/results2.png)
+
 ## Technologies Utilized
 Key open-source libraries critical to this project include PyTorch, torchvision, rasterio, shapely, geojson, geopandas, and numpy.
