@@ -116,7 +116,7 @@ While the model demonstrated high accuracy in rural segmentation, evaluating its
     *   **Environmental Factors:** Varying flight angles and times of day introduced inconsistent shadows and lighting, altering the perceived shape and contrast of structures across different tiles.
  
 ![Error 1](images/error.png)
-![Error 2](images/error1.png)
+![Error 2](images/error2.png)
 
 **Impact on Workflow**
 Although exact time-saving metrics were not recorded, deploying the inference pipeline fundamentally accelerated the mapping phase. By shifting the workload from ground-up manual polygon digitization to a streamlined process of geometric verification and correction, the model considerably reduced the timeline required to achieve full-island coverage.
