@@ -1,5 +1,7 @@
 # Deep Learning for Geospatial Analysis: Automating Building Recognition Across Prince Edward Island (1968)
 
+**Full Code: [[Click Here]](DLM.ipynb)**
+
 ## Project Objective
 This project aimed to achieve clear segmentation and mapping of historic buildings (barns, houses, and other structures such as garages, sheds, and work stations) using historical aerial imagery of Prince Edward Island from 1968. This process opens up wide opportunities for analysis, exploring various metrics and statistics that align with regional phenomena.
 
@@ -136,7 +138,7 @@ Although exact time-saving metrics were not recorded, deploying the inference pi
 ## Data Analysis
 
 **Methodology & Metric Selection**
-The primary objective of the analysis phase was to quantify the 1986 historical landscape. The core metrics focused on building density and average footprint area (m²) aggregated by lot and county. 
+The primary objective of the analysis phase was to quantify the 1968 historical landscape. The core metrics focused on building density and average footprint area (m²) aggregated by lot and county. 
 
 The following convention was established for spatial analysis:
 * **`House_N`:** Total number of houses per lot
