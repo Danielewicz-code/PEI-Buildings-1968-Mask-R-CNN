@@ -21,8 +21,28 @@ This project aimed to achieve clear segmentation and mapping of historic buildin
 *   **Mask R-CNN:** A pre-trained `Mask R-CNN` model, equipped with a ResNet-50-FPN backbone, was selected and fine-tuned for the task. This architecture was chosen for its proven capability in high-accuracy object detection and instance segmentation across various object classes.
 
 ### 3. Model Training
-*   **GPU-Accelerated Training:** The model underwent 10 epochs of training on Google Colab, leveraging its GPU resources for faster computation.
-*   **Performance:** Training was conducted on 6,044 images which had the 14,000 building sets, resulting in a validation loss of approximately 0.31, indicating strong model performance.
+
+*   **Environment:** Trained on Google Colab leveraging an NVIDIA T4 GPU for hardware acceleration.
+*   **Dataset Scale:** 6,044 image tiles containing ~14,000 distinct building segmentations.
+*   **Training Performance:** Achieved a final validation loss of ~0.31.
+
+**Quantitative Metrics (10% Hold-out Set):**
+*   **mAP (IoU=0.50:0.95):** 0.3805
+*   **mAP@50 (IoU=0.50):** 0.6690
+*   **mAP@75 (IoU=0.75):** 0.4049
+
+*Explanation of Evaluation Metrics:*
+*   **mAP (Mean Average Precision):** The standard metric for instance segmentation. It calculates how accurately the model detects an object and how perfectly its predicted polygon matches the true building footprint across various strictness levels.
+*   **mAP@50 (Loose Overlap):** Measures accuracy when the model's prediction only needs to overlap the actual building by 50% (Intersection over Union). A score of 0.6690 indicates strong reliability in finding buildings and identifying their general locations.
+*   **mAP@75 (Strict Overlap):** Measures accuracy when requiring a strict 75% overlap. The drop to 0.4049 highlights the model's difficulty in generating pixel-perfect boundaries, a direct consequence of the variable contrast, shadows, and film grain inherent in 1968 black-and-white aerial imagery.
+
+**Hyperparameters**
+*   **Optimizer:** Stochastic Gradient Descent (SGD)
+*   **Learning Rate:** 0.005
+*   **Momentum:** 0.9
+*   **Weight Decay:** 0.0005
+*   **Epochs:** 10
+*   **Batch Size:** 4
 
 ### 4. Memory-Efficient Geospatial Inference Pipeline
 To process hundreds of thousands of high-resolution `.tif` files across entire counties (Prince and Kings Counties), a specialized memory-efficient pipeline was developed:
