@@ -120,13 +120,13 @@ While the model demonstrated high accuracy in rural segmentation, evaluating its
 ![Error 1](images/error.png)
 ![Error 2](images/error2.png)
 
-**Impact on Workflow**
-Although exact time-saving metrics were not recorded, deploying the inference pipeline fundamentally accelerated the mapping phase. By shifting the workload from ground-up manual polygon digitization to a streamlined process of geometric verification and correction, the model considerably reduced the timeline required to achieve full-island coverage.
 
 ## Final Review and Project Outcome
 *   **ArcGIS Integration:** The generated GeoJSON files were imported back into ArcGIS for manual correction, inspection, and further analysis.
 *   **Workflow Value:** This project demonstrates a powerful workflow for automating the creation of valuable geospatial datasets from historical aerial imagery.
 *   **Historical Insights:** The generated dataset will be instrumental in uncovering historical insights into Prince Edward Island from 1968, including identifying housing clusters, land distribution patterns, and understanding the broader geographical state of the island.
+*   **Impact on Workflow**
+Although exact time-saving metrics were not recorded, deploying the inference pipeline fundamentally accelerated the mapping phase. By shifting the workload from ground-up manual polygon digitization to a streamlined process of geometric verification and correction, the model considerably reduced the timeline required to achieve full-island coverage.
 
 ## Final result example implemented into ArcGIS
 
