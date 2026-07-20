@@ -66,17 +66,24 @@ To address the issue of multiple overlapping polygons generated for a single bui
 
 
 ## Data Analysis
-As we entered the analyzing phase, one of our approaches was to create visual and numeric representations of the following metrics:
 
-* **House_N:** Total number of houses per lot
-* **House_AveM2:** Average `m2` of house footprints per lot
-* **Barn_N:** Total number of barns per lot
-* **Barn_AveM2:** Average `m2` of barn footprints per lot
-* **Out_N:** Total number of outbuildings per lot
-* **Out_AveM2:** Average `m2` of outbuilding footprints per lot
+**Methodology & Metric Selection**
+The primary objective of the analysis phase was to quantify the 1986 historical landscape. The core metrics focused on building density and average footprint area (m²) aggregated by lot and county. 
 
-With these metrics, we can map the hotspots across each lot. As anticipated, this uncovers phenomena like the potato belt, highlighting a higher concentration of farms in the central-western part of the island.
-Results from this analysis are available in: [[1968_Comprehensive_Building_Report]](1968_Comprehensive_Building_Report.pdf)
+The following convention was established for spatial analysis:
+* **`House_N`:** Total number of houses per lot
+* **`House_AveM2`:** Average house footprint (m²) per lot
+* **`Barn_N`:** Total number of barns per lot
+* **`Barn_AveM2`:** Average barn footprint (m²) per lot
+* **`Out_N`:** Total number of outbuildings per lot
+* **`Out_AveM2`:** Average outbuilding footprint (m²) per lot
+
+**Key Findings & Spatial Phenomena**
+* **Density Hotspots:** Mapping these metrics revealed distinct spatial concentrations, notably highlighting the "potato belt" with a high density of farms and residential structures in the central region of the island.
+* **Building sizes and city limits:** Analysis of building size distributions showed that the largest structures correlate with active agricultural commerce and proximity to commercial areas like Charlottetown and Summerside. Average residential footprints shrink as distance from these centers increases.
+* **Barn-to-House Ratio:** Evaluating this ratio identified primary agricultural reserves per lot, correlating strongly with known historical locations of livestock, root crop, and berry farming operations among many others. 
+
+**Full Results:** [[1968_Comprehensive_Building_Report]](1968_Comprehensive_Building_Report.pdf) 
 
 ## Technologies Utilized
 Key open-source libraries critical to this project include PyTorch, torchvision, rasterio, shapely, geojson, geopandas, and numpy.
