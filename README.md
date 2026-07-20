@@ -20,6 +20,33 @@ This project aimed to achieve clear segmentation and mapping of historic buildin
 ### 2. Model Selection and Architecture
 *   **Mask R-CNN:** A pre-trained `Mask R-CNN` model, equipped with a ResNet-50-FPN backbone, was selected and fine-tuned for the task. This architecture was chosen for its proven capability in high-accuracy object detection and instance segmentation across various object classes.
 
+```
+def get_model(num_classes):
+    model = torchvision.models.detection.maskrcnn_resnet50_fpn(weights="DEFAULT")
+
+    # Replace bounding box head
+    in_features = model.roi_heads.box_predictor.cls_score.in_features
+    model.roi_heads.box_predictor = FastRCNNPredictor(in_features, num_classes)
+
+    # Replace mask head
+    in_features_mask = model.roi_heads.mask_predictor.conv5_mask.in_channels
+    hidden_layer = 256
+    model.roi_heads.mask_predictor = MaskRCNNPredictor(in_features_mask, hidden_layer, num_classes)
+
+    return model
+
+# Send model to the Colab GPU
+device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
+model = get_model(num_classes=4)
+model.to(device)
+
+# Setup the optimizer (how the model learns from mistakes)
+params = [p for p in model.parameters() if p.requires_grad]
+optimizer = torch.optim.SGD(params, lr=0.005, momentum=0.9, weight_decay=0.0005)
+
+print(f"Model built and loaded onto: {device}")
+```
+
 ### 3. Model Training
 
 *   **Environment:** Trained on Google Colab leveraging an NVIDIA T4 GPU for hardware acceleration.
@@ -45,13 +72,16 @@ This project aimed to achieve clear segmentation and mapping of historic buildin
 *   **Batch Size:** 4
 
 ### 4. Memory-Efficient Geospatial Inference Pipeline
-To process hundreds of thousands of high-resolution `.tif` files across entire counties (Prince and Kings Counties), a specialized memory-efficient pipeline was developed:
-*   **Intelligent Tiling:** Massive county-level TIFF files were broken down into smaller, overlapping tiles. This strategy managed memory effectively while ensuring full coverage of the map areas.
-*   **Filtering for Relevance:** To optimize processing time, irrelevant tiles were filtered out. This included:
-    *   Discarding empty ocean areas (NoData flags).
-    *   Removing black clusters.
-    *   Filtering tiles with low variance, indicating a lack of meaningful visual information.
-*   **Batch Processing & Checkpointing:** Model inference on these tiles was optimized through batch processing. A checkpointing mechanism was implemented to save processed progress incrementally, allowing for recovery and resumption in case of system interruptions.
+
+To process hundreds of thousands of high-resolution `.tif` files across entire counties, a specialized memory-efficient pipeline was developed using `rasterio`:
+
+*   **Intelligent Tiling (256x256):** Massive county-level TIFF files were sliced into 256x256 pixel spatial chips. A 20% overlap strategy (calculated via a 204-pixel stride) was implemented to ensure continuous coverage and prevent structures from being severed at tile edges.
+*   **Multi-Stage Algorithmic Filtering:** To optimize processing time and eliminate empty geography, a stringent 3-pass filter evaluated each window before saving:
+    *   **NoData Check:** Discarded tiles where less than 5% of the total pixels contained readable data.
+    *   **Black Cluster Threshold:** Discarded tiles containing >25% pure black pixels, effectively eliminating map borders and deep ocean segments.
+    *   **Variance Filter:** Discarded tiles with a standard deviation below 16.3, successfully filtering out visually uniform areas lacking structural features (e.g., open water, flat agricultural fields).
+*   **Geospatial Preservation:** The `rasterio.windows.Window` transform was dynamically applied to preserve the exact real-world CRS coordinates for every generated sub-tile.
+*   **I/O Optimization:** To bypass Google Drive network bottlenecks during the generation of tens of thousands of files, tiles were written to a local temporary Colab directory, bulk-compressed into a `.zip` archive, and then exported in a single transfer.
 
 ### 5. GeoJSON Conversion and Spatial Intelligence
 *   **Output Format:** The model's pixel-level predictions were converted into the industry-standard `GeoJSON` format, crucial for integration with ArcGIS.
@@ -72,6 +102,21 @@ To address the issue of multiple overlapping polygons generated for a single bui
 * Restore Original Dimensions: Shrinking polygons by 0.5 meters to revert to their true ground size.
 
 * Cross-Class Overlap Filtering: A final filter removes cross-class overlaps. If two or more polygons (even of different classes) overlap by a 30% threshold, the detection with the highest confidence score is retained, drastically reducing redundant shapes.
+
+### 7. Limitations and Edge Cases
+
+While the model demonstrated high accuracy in rural segmentation, evaluating its performance revealed specific boundary conditions and limitations. These errors are primarily attributed to training data distribution, spectral constraints, and environmental variance.
+
+*   **Training Distribution Bias (Rural vs. Urban):** The dataset was heavily biased toward rural agricultural landscapes. Consequently, the model struggled in unrepresented domains:
+    *   **Cottage Zones:** High-density, smaller footprint cottages were frequently misclassified as secondary outbuildings.
+    *   **Urban Centers:** Square commercial structures and closely packed town buildings were often ignored or misclassified.
+*   **Geometric Conflation:** Coastal infrastructure, specifically docks, produced false positives as their top-down rectangular footprints closely mimic agricultural barns. Additionally, isolated tree canopies occasionally triggered false positive detections.
+*   **Spectral & Temporal Variance:** 
+    *   **Panchromatic Limitations:** The inherent lack of multispectral data in the 1968 black-and-white imagery caused distinct structures with similar geometric and spectral signatures (e.g., a longhouse vs. a barn) to be confused.
+    *   **Environmental Factors:** Varying flight angles and times of day introduced inconsistent shadows and lighting, altering the perceived shape and contrast of structures across different tiles.
+
+**Impact on Workflow**
+Although exact time-saving metrics were not recorded, deploying the inference pipeline fundamentally accelerated the mapping phase. By shifting the workload from ground-up manual polygon digitization to a streamlined process of geometric verification and correction, the model considerably reduced the timeline required to achieve full-island coverage.
 
 ## Final Review and Project Outcome
 *   **ArcGIS Integration:** The generated GeoJSON files were imported back into ArcGIS for manual correction, inspection, and further analysis.
